@@ -11,6 +11,7 @@
     "next": "12.0.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
+    "react-google-login": "^5.2.2",
     "tailwind-styled-components": "^2.0.3"
   },
   "devDependencies": {
