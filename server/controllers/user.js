@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
@@ -19,39 +18,6 @@ export const getUser = async (req, res) => {
   } catch (error) {
     console.log(error);
   }
-};
-
-export const updateActivity = async (req, res) => {
-  const { task } = req.params;
-  const { itemId } = req.body;
-  const userId = req.userId;
-  if (!userId) return res.json({ message: "Unauthenticated" });
-
-  if (!mongoose.Types.ObjectId.isValid(itemId))
-    return res.status(404).send("No item with that id");
-
-  const user = await User.findById(userId);
-
-  switch (task) {
-    case "list":
-      if (!user.listings.includes(itemId)) {
-        user.listings.unshift(itemId);
-      }
-      break;
-    case "hire":
-      if (!user.hirings.includes(itemId)) {
-        user.hirings.unshift(itemId);
-      }
-      break;
-    default:
-      break;
-  }
-
-  const updatedUser = await User.findByIdAndUpdate(userId, user, {
-    new: true,
-  });
-
-  res.status(200).json(updatedUser);
 };
 
 export const login = async (req, res) => {

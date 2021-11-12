@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import itemRoutes from "./routes/items.js";
 import userRoutes from "./routes/users.js";
 import dotenv from "dotenv";
 
@@ -12,11 +11,10 @@ app.use(express.json({ limit: "30mb", extended: true }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
 
-app.use("/items", itemRoutes);
 app.use("/user", userRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Welcome to the dark side...");
+  res.send("Welcome to the kitchen...");
 });
 
 const PORT = process.env.PORT || 5000;
