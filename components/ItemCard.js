@@ -12,7 +12,8 @@ export default function ItemCard({ initialItem, totalPrice, settotalPrice }) {
 						<PlusButton
 							onClick={() => {
 								setItem({ ...item, count: item.count + 1 });
-								settotalPrice(totalPrice + item.price);
+                settotalPrice(totalPrice + item.price);
+                initialItem.count = initialItem.count + 1;
 							}}
 						>
 							+
@@ -20,7 +21,8 @@ export default function ItemCard({ initialItem, totalPrice, settotalPrice }) {
 						<MinusButton
 							onClick={() => {
 								setItem({ ...item, count: item.count - 1 });
-								settotalPrice(totalPrice - item.price);
+                settotalPrice(totalPrice - item.price);
+                initialItem.count = initialItem.count - 1;
 							}}
 						>
 							-
@@ -29,7 +31,7 @@ export default function ItemCard({ initialItem, totalPrice, settotalPrice }) {
 				</Counter>
 			)}
 			<Item
-				onClick={() => {
+        onClick={() => {
 					if (!item.count) {
 						settotalPrice(totalPrice + item.price);
 						item.count = 1;
