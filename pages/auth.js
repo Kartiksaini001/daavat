@@ -1,13 +1,15 @@
 import tw from "tailwind-styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { GoogleLogin } from "react-google-login";
 import { useRouter } from "next/router";
 import axios from "axios";
+import AuthContext from "../contexts/authContext";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
   const [isHotel, setIsHotel] = useState(false);
   const [error, setError] = useState("");
+  const { user, setUser } = useContext(AuthContext);
   const router = useRouter();
 
   const googleSuccess = async (res) => {
@@ -22,6 +24,9 @@ export default function Auth() {
           .post("/api/hotel/google", { name, email, password: googleId })
           .then((res) => {
             console.log(res);
+            const newUser = { data: res.data.hotelData, isHotel: true, token: res.data.token };
+            setUser(newUser);
+            localStorage.setItem("profile", JSON.stringify(newUser));
             router.push("/hotel/dashboard");
           });
       } else {
@@ -29,6 +34,9 @@ export default function Auth() {
           .post("/api/user/google", { name, email, password: googleId })
           .then((res) => {
             console.log(res);
+            const newUser = { data: res.data.userData, isHotel: false, token: res.data.token };
+            setUser(newUser);
+            localStorage.setItem("profile", JSON.stringify(newUser));
             router.push("/");
           });
       }
@@ -59,18 +67,27 @@ export default function Auth() {
 
   const submitData = (route, { name, email, password, confirmPassword }) => {
     if (isLogin) {
+      // Login
       axios
         .post(`api/${route}/login`, {
           email,
           password,
         })
         .then((res) => {
-          console.log(res.data);
-
-          if (isHotel) router.push("/hotel/dashboard");
-          else router.push("/");
+          if (isHotel) {
+            const newUser = { data: res.data.hotelData, isHotel: true, token: res.data.token };
+            setUser(newUser);
+            localStorage.setItem("profile", JSON.stringify(newUser));
+            router.push("/hotel/dashboard");
+          } else {
+            const newUser = { data: res.data.userData, isHotel: false, token: res.data.token };
+            setUser(newUser);
+            localStorage.setItem("profile", JSON.stringify(newUser));
+            router.push("/");
+          }
         });
     } else {
+      // Register
       if (password !== confirmPassword) {
         setError("Password does not match");
         return;
@@ -82,10 +99,17 @@ export default function Auth() {
           password,
         })
         .then((res) => {
-          console.log(res.data);
-
-          if (isHotel) router.push("/hotel/dashboard");
-          else router.push("/");
+          if (isHotel) {
+            const newUser = { data: res.data.hotelData, isHotel: true, token: res.data.token };
+            setUser(newUser);
+            localStorage.setItem("profile", JSON.stringify(newUser));
+            router.push("/hotel/dashboard");
+          } else {
+            const newUser = { data: res.data.userData, isHotel: false, token: res.data.token };
+            setUser(newUser);
+            localStorage.setItem("profile", JSON.stringify(newUser));
+            router.push("/");
+          }
         });
     }
   };
