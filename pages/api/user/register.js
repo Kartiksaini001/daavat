@@ -26,9 +26,10 @@ export default async function handler(req, res) {
     });
 
     const userData = {
-      name: result.name,
-      email: result.email,
-    };
+			name: result.name,
+			email: result.email,
+			id: result._id.toString(),
+		};
 
     const token = jwt.sign(
       { email: result.email, id: result._id },

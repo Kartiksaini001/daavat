@@ -21,9 +21,10 @@ export default async function handler(req, res) {
         return res.status(400).json({ message: "Invalid Credentials" });
 
       const userData = {
-        name: existingUser.name,
-        email: existingUser.email,
-      };
+				name: existingUser.name,
+				email: existingUser.email,
+				id: existingUser._id.toString(),
+			};
 
       const token = jwt.sign(
         { email: existingUser.email, id: existingUser._id },
