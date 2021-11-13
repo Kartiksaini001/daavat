@@ -7,102 +7,98 @@ import AuthContext from "../contexts/authContext";
 import i1 from "../img/test1.jpg";
 import Head from "next/head";
 const hotel = [
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
 ];
 
 export default function Home() {
-	const { user, setUser } = useContext(AuthContext);
-	const router = useRouter();
+  const { user, setUser } = useContext(AuthContext);
+  const router = useRouter();
 
-	useEffect(() => {
-		const newUser = JSON.parse(localStorage.getItem("profile"));
-		console.log(newUser);
-		if (!newUser) router.push("/auth");
-		else {
-			setUser(newUser)
-		};
-	}, []);
+  useEffect(() => {
+    const newUser = JSON.parse(localStorage.getItem("profile"));
+    if (!newUser) router.push("/auth");
+  }, []);
 
-	return (
-		<>
-			<head>
-				<title>Daavat</title>
-				<meta
-					name="description"
-					content="Integrating OneSignal with a Next.js app."
-				/>
-				<link rel="icon" href="/favicon.ico" />
-				<script
-					src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
-					async=""
-				></script>
-			</head>
-			<Wrapper>
-				<Message>Hotels nearby you...</Message>
-				<HotelGrid>
-					{hotel.map((item, index) => {
-						return (
-							<Link href="/menu" key={index}>
-								<HotelCard>
-									<Image
-										height="1000"
-										src={item.img}
-										alt="Sunset in the mountains"
-										placeholder="blur"
-										priority
-									/>
-									<HotelBody>
-										<div className="font-bold text-xl mb-2 text-center">
-											{item.name}
-										</div>
-									</HotelBody>
-								</HotelCard>
-							</Link>
-						);
-					})}
-				</HotelGrid>
-			</Wrapper>
-		</>
-	);
+  return (
+    <>
+      <head>
+        <title>Daavat</title>
+        <meta
+          name="description"
+          content="Integrating OneSignal with a Next.js app."
+        />
+        <link rel="icon" href="/favicon.ico" />
+        <script
+          src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
+          async=""
+        ></script>
+      </head>
+      <Wrapper>
+        <Message>Hotels nearby you...</Message>
+        <HotelGrid>
+          {hotel.map((item, index) => {
+            return (
+              <Link href="/menu" key={index}>
+                <HotelCard>
+                  <Image
+                    height="1000"
+                    src={item.img}
+                    alt="Sunset in the mountains"
+                    placeholder="blur"
+                    priority
+                  />
+                  <HotelBody>
+                    <div className="font-bold text-xl mb-2 text-center">
+                      {item.name}
+                    </div>
+                  </HotelBody>
+                </HotelCard>
+              </Link>
+            );
+          })}
+        </HotelGrid>
+      </Wrapper>
+    </>
+  );
 }
 // flex bg-white text-black h-screen items-center justify-center
 const Wrapper = tw.div`

@@ -4,7 +4,6 @@ import Hotel from "../../../../models/hotel";
 dbConnect();
 
 export default async function handler(req, res) {
-  console.log(req.query);
   const { email } = req.body;
   const { id } = req.query;
 

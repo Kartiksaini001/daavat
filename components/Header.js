@@ -5,7 +5,6 @@ import Image from "next/image";
 
 export default function Header() {
   const { user } = useContext(AuthContext);
-  console.log(user);
   return (
     <Wrapper>
       <Title>Daavat</Title>

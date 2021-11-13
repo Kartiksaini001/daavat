@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 const initialValue = [];
 
 export default function Dashboard() {
-  // const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [menu, setMenu] = useState(initialValue);
   const [load, setLoad] = useState(true);
   const [isOpen, setOpen] = useState(false);
@@ -23,7 +23,6 @@ export default function Dashboard() {
   useEffect(() => {
     const newUser = JSON.parse(localStorage.getItem("profile"));
     const temp = newUser.data.email;
-    console.log(temp);
     axios.get("/api/hotel/menu", { params: { email: temp } }).then((res) => {
       setMenu(res.data);
       setEmail(temp);
@@ -41,9 +40,7 @@ export default function Dashboard() {
   };
 
   const handleDelete = async () => {
-    console.log(del);
     const id = menu[del]._id;
-    console.log(id);
 
     axios.patch(`/api/hotel/menu/${id}`, { email }).then((res) => {
       setMenu(res.data);
@@ -63,7 +60,7 @@ export default function Dashboard() {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
-                    You want to delete "{gone}"
+                    You want to delete {`"${gone}"`}
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -123,14 +120,14 @@ export default function Dashboard() {
             <strong className="font-bold">
               Foodies want it back &nbsp; &nbsp;&nbsp;
             </strong>
-            <span className="block sm:inline">"{gone}" is deleted</span>
+          <span className="block sm:inline">{`"${gone}"`} is deleted</span>
           </div>
         )}
         <HotelGrid>
           {menu &&
             menu.map((item, index) => {
               return (
-                <div>
+                <div key={index}>
                   <a onClick={() => toggle(index)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

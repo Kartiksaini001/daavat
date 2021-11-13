@@ -4,9 +4,6 @@ import Hotel from "../../../../models/hotel";
 dbConnect();
 
 export default async function handler(req, res) {
-  console.log("server");
-
-
   switch (req.method) {
     case "GET":
       try {
