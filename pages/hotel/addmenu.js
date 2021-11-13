@@ -1,6 +1,6 @@
 import { useState } from "react";
 import tw from "tailwind-styled-components";
-import { MenuList } from "../data/MenuList";
+import { MenuList } from "../../data/MenuList";
 
 const AddMenu = () => {
   const [totalPrice, setTotalPrice] = useState(0);
