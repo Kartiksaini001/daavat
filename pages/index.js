@@ -1,8 +1,10 @@
 import tw from "tailwind-styled-components";
-import i1 from "../img/test1.jpg";
 import Image from "next/image";
 import Link from "next/link";
-import Header from "../components/Header";
+import { useRouter } from "next/router";
+import { useEffect, useContext } from "react";
+import AuthContext from "../contexts/authContext";
+import i1 from "../img/test1.jpg";
 
 const hotel = [
   {
@@ -48,9 +50,18 @@ const hotel = [
 ];
 
 export default function Home() {
+  const { user, setUser } = useContext(AuthContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    const newUser = JSON.parse(localStorage.getItem("profile"));
+    console.log(newUser);
+    if (!newUser) router.push("/auth");
+    else setUser(newUser);
+  }, []);
+
   return (
     <Wrapper>
-      <Header />
       <Message>Hotels nearby you...</Message>
       <HotelGrid>
         {hotel.map((item, index) => {
@@ -79,7 +90,7 @@ export default function Home() {
 }
 // flex bg-white text-black h-screen items-center justify-center
 const Wrapper = tw.div`
-  p-4
+  p-4 pt-24
 `;
 const Message = tw.div`
   text-3xl font-medium px-4 mb-2

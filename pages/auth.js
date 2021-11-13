@@ -193,17 +193,8 @@ export default function Auth() {
   );
 }
 
-// export async function getStaticProps() {
-
-//   return {
-//     props: {
-//       movies: JSON.parse(JSON.stringify(movies)),
-//     },
-//   };
-// }
-
 const Wrapper = tw.div`
-    bg-gray-200 py-10 h-screen
+    bg-gray-200 py-10 h-screen pt-24
 `;
 const UserType = tw.div`
   mx-auto w-max space-x-4 mb-5
