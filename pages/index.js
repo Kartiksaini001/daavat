@@ -1,5 +1,5 @@
 import tw from "tailwind-styled-components";
-import i1 from "../img/test2.jpg";
+import i1 from "../img/test1.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "../components/Header";
@@ -58,8 +58,7 @@ export default function Home() {
 						<Link href="/menu">
 							<HotelCard>
 								<Image
-									className="h-64"
-									height="500"
+									height="1000"
 									src={item.img}
 									alt="Sunset in the mountains"
 									placeholder="blur"
