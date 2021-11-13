@@ -1,83 +1,96 @@
 import tw from "tailwind-styled-components";
-import i1 from "../img/test1.jpg";
 import Image from "next/image";
 import Link from "next/link";
-import Header from "../components/Header";
+import { useRouter } from "next/router";
+import { useEffect, useContext } from "react";
+import AuthContext from "../contexts/authContext";
+import i1 from "../img/test1.jpg";
 
 const hotel = [
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
 ];
 
 export default function Home() {
-	return (
+  const { user, setUser } = useContext(AuthContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    const newUser = JSON.parse(localStorage.getItem("profile"));
+    console.log(newUser);
+    if (!newUser) router.push("/auth");
+    else setUser(newUser);
+  }, []);
+
+  return (
     <Wrapper>
-      <Header />
       <Message>Hotels nearby you...</Message>
-			<HotelGrid>
-				{hotel.map((item, index) => {
-					return (
-						<Link href="/menu">
-							<HotelCard>
-								<Image
-									height="1000"
-									src={item.img}
-									alt="Sunset in the mountains"
-									placeholder="blur"
-									priority
-								/>
-								<HotelBody>
-									<div className="font-bold text-xl mb-2 text-center">{item.name}</div>
-								</HotelBody>
-							</HotelCard>
-						</Link>
-					);
-				})}
-			</HotelGrid>
-		</Wrapper>
-	);
+      <HotelGrid>
+        {hotel.map((item, index) => {
+          return (
+            <Link href="/menu" key={index}>
+              <HotelCard>
+                <Image
+                  height="1000"
+                  src={item.img}
+                  alt="Sunset in the mountains"
+                  placeholder="blur"
+                  priority
+                />
+                <HotelBody>
+                  <div className="font-bold text-xl mb-2 text-center">
+                    {item.name}
+                  </div>
+                </HotelBody>
+              </HotelCard>
+            </Link>
+          );
+        })}
+      </HotelGrid>
+    </Wrapper>
+  );
 }
 // flex bg-white text-black h-screen items-center justify-center
 const Wrapper = tw.div`
-  p-4
+  p-4 pt-24
 `;
 const Message = tw.div`
   text-3xl font-medium px-4 mb-2

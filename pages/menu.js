@@ -60,13 +60,13 @@ const Menu = () => {
 export default Menu;
 
 const Wrapper = tw.div`
-  flex flex-col h-screen
+  flex flex-col h-screen pt-24
 `;
 const Header = tw.div`
-  bg-black text-white rounded-lg p-4 py-8 pl-6 m-4
+  bg-black text-white rounded-lg py-5 pl-6 m-4
 `;
 const HotelName = tw.div`
-  text-5xl
+  text-2xl
 `;
 //flex flex-col mt-4 h-70 overflow-auto bg-white flex-1 mx-4 justify-center
 const ItemList = tw.div`
