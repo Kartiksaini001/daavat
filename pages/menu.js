@@ -2,6 +2,7 @@ import { useState } from "react";
 import tw from "tailwind-styled-components";
 import { MenuList } from "../data/MenuList";
 import ItemCard from "../components/ItemCard";
+import router from "next/router";
 
 const Menu = () => {
 	const [totalPrice, settotalPrice] = useState(0);
@@ -22,12 +23,31 @@ const Menu = () => {
 			</ItemList>
 			<ConfirmContainer>
 				<ConfirmButton
+					onClick={() => {
+						if (totalPrice < 400) {
+							return;
+						}
+						let orderArray = [];
+						MenuList.map((item) => {
+							if (item.count > 0) {
+								orderArray.push({
+									name: item.name,
+									price: item.price,
+									count: item.count,
+								});
+							}
+						});
+						sessionStorage.setItem("orderList", JSON.stringify(orderArray));
+
+						router.push("/order");
+					}}
 					className={`${
 						totalPrice < 400 && "cursor-not-allowed bg-opacity-75"
 					}`}
 				>
 					Confirm order
 				</ConfirmButton>
+
 				<Total>Total &#x20B9;{totalPrice}</Total>
 				<ShortMessage>
 					{totalPrice < 400 && "Total price must be atleast 400"}
