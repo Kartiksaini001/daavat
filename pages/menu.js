@@ -1,6 +1,7 @@
 import { useState } from "react";
 import tw from "tailwind-styled-components";
 import { MenuList } from "../data/MenuList";
+import ItemCard from "../components/ItemCard";
 
 const Menu = () => {
 	const [totalPrice, settotalPrice] = useState(0);
@@ -11,40 +12,12 @@ const Menu = () => {
 			</Header>
 			<ItemList>
 				{MenuList.map((item, key) => (
-					<ItemCard>
-						{item.count > 0 && (
-							<Counter>
-								Count: {item.count}
-								<CounterButtonContainer>
-									<PlusButton onClick={() => (item.count = item.count + 1)}>
-										+
-									</PlusButton>
-									<MinusButton>-</MinusButton>
-								</CounterButtonContainer>
-							</Counter>
-						)}
-						<Item
-							key={key}
-							onClick={() => {
-								if (!item.count) {
-									settotalPrice(totalPrice + item.price);
-									item.count = 1;
-								} else {
-									settotalPrice(totalPrice - item.price);
-									item.count = item.count - 1;
-								}
-							}}
-							className={`${
-								!item.count
-									? "border-blue-400 border"
-									: "border-green-400 bg-green-200 scale-95 border-4"
-							}`}
-						>
-							<Name>{item.name}</Name>
-							<Desc>{item.description}</Desc>
-							<Price>&#x20B9;{item.price}</Price>
-						</Item>
-					</ItemCard>
+					<ItemCard
+						key={key}
+						initialItem={item}
+						totalPrice={totalPrice}
+						settotalPrice={settotalPrice}
+					/>
 				))}
 			</ItemList>
 			<ConfirmContainer>
@@ -80,25 +53,7 @@ const ItemList = tw.div`
   flex flex-col flex-1 p-4 mt-4 mx-auto flex-1 overflow-auto
 `;
 //flex justify-between bg-white p-4 items-center my-2 mx-5 rounded-lg py-8 transform hover:bg-opacity-75 transition shadow-md active:bg-green-100  bg-gray-200`;
-const ItemCard = tw.div`
-	mx-auto mt-4
-`;
 
-const Item = tw.button`
-  flex p-4 justify-between items-center py-8 rounded-lg transform hover:bg-opacity-75 transition shadow-md active:bg-green-100 bg-gray-200
-`;
-const Name = tw.div`
-  font-medium
-`;
-const Desc = tw.div`
-  text-sm mx-10 text-center flex-grow-0 w-1/2 text-gray-800
-`;
-const Price = tw.div`
-  font-medium
-`;
-const ConfirmContainer = tw.div`
-  flex flex-row-reverse py-4 items-center pb-2 border border-t-2 bg-white
-`;
 const Total = tw.div`
   mr-8
 `;
@@ -108,14 +63,7 @@ const ConfirmButton = tw.button`
 const ShortMessage = tw.div`
 	text-xs mr-3 text-red-600
 `;
-const Counter = tw.div`
-	flex items-center
-`;
-const CounterButtonContainer = tw.div`
-`;
-const PlusButton = tw.button`
-	mx-2 text-2xl bg-green-500 p-1 px-2 rounded-lg
-`;
-const MinusButton = tw.button`
-	mx-2 text-2xl bg-red-500 p-1 px-2 rounded-lg
+
+const ConfirmContainer = tw.div`
+  flex flex-row-reverse py-4 items-center pb-2 border border-t-2 bg-white
 `;
