@@ -1,7 +1,7 @@
 import { useState,useEffect } from "react";
 import tw from "tailwind-styled-components";
 import axios from "axios";
-import router, { useRouter } from 'next/router'
+import { useRouter } from 'next/router'
 
 import { MenuList } from "../../data/MenuList";
 
@@ -13,6 +13,7 @@ const AddMenu = () => {
     desc: '',
     price: ''
 });
+const router=useRouter();
   useEffect(() => {
     const newUser = JSON.parse(localStorage.getItem("profile"));
     setTitle(newUser.data.name);
@@ -33,7 +34,7 @@ const handleSubmit=(e) =>{
   }
   axios.patch("/api/hotel/menu",newDish)
   .then((res) => {
-     cosole.log(res);
+     console.log(res);
      router.push("/hotel/dashboard");
   })
 
@@ -93,8 +94,9 @@ const handleSubmit=(e) =>{
           <div className="md:w-2/3">
             <input
               className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
-              type="price"
+              type="number"
               id="price"
+              
               value={values.price}
               onChange={handleChange()}
               placeholder="price"
