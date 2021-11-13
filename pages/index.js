@@ -58,7 +58,7 @@ export default function Home() {
 						<Link href="/menu">
 							<HotelCard>
 								<Image
-									height="1000"
+									height="2000"
 									src={item.img}
 									alt="Sunset in the mountains"
 									placeholder="blur"

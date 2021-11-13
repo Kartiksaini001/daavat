@@ -16,10 +16,10 @@ const Menu = () => {
 							<Counter>
 								Count: {item.count}
 								<CounterButtonContainer>
-									<PlusButton onClick={() => (item.count = item.count + 1)}>
+									<PlusButton onClick={() =>{ {item.count = item.count + 1;settotalPrice(totalPrice+item.price);}}}>
 										+
 									</PlusButton>
-									<MinusButton>-</MinusButton>
+									<MinusButton onClick={() =>{ if(item.count>1){(item.count = item.count-1);settotalPrice(totalPrice-item.price);}}}>-</MinusButton>
 								</CounterButtonContainer>
 							</Counter>
 						)}
