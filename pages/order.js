@@ -48,7 +48,7 @@ const Order = () => {
 export default Order;
 
 const Wrapper = tw.div`
-  bg-gray-200 h-screen p-4
+  bg-gray-200 h-screen p-4 pt-24
 `;
 const ActionContainer = tw.div`
   text-2xl mb-10 flex items-center justify-center
