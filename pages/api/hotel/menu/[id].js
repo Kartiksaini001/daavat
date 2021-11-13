@@ -4,13 +4,13 @@ import Hotel from "../../../../models/hotel";
 dbConnect();
 
 export default async function handler(req, res) {
+  console.log(req.query);
   const { email } = req.body;
   const { id } = req.query;
 
   try {
     const hotel = await Hotel.findOne({ email });
-    const newMenu = hotel.menu.filter((item) => item._id === id);
-
+    const newMenu = hotel.menu.filter((item) => item._id.toString() !== id);
     const newHotel = await Hotel.findOneAndUpdate(
       { email },
       { menu: newMenu },

@@ -4,14 +4,13 @@ import Hotel from "../../../../models/hotel";
 dbConnect();
 
 export default async function handler(req, res) {
-  const { email } = req.body;
-  const newData = req.body;
-  delete newData.email;
+  console.log("server");
+
 
   switch (req.method) {
     case "GET":
       try {
-        const hotel = await Hotel.findOne({ email });
+        const hotel = await Hotel.findOne({email: req.query.email});
 
         res.status(200).json(hotel.menu);
       } catch (error) {
@@ -19,27 +18,14 @@ export default async function handler(req, res) {
       }
       break;
     case "PATCH":
+      const { email } = req.body;
+      const newData = req.body;
+      delete newData.email;
       try {
         const hotel = await Hotel.findOne({ email });
         const newMenu = hotel.menu;
 
         newMenu.push(newData);
-        const newHotel = await Hotel.findOneAndUpdate(
-          { email },
-          { menu: newMenu },
-          { new: true }
-        );
-
-        res.status(200).json(newHotel.menu);
-      } catch (error) {
-        res.status(400).json({ msg: error.msg });
-      }
-      break;
-    case "DELETE":
-      try {
-        const hotel = await Hotel.findOne({ email });
-        const newMenu = hotel.menu.filter((item)=> (item._id===newData.id));
-
         const newHotel = await Hotel.findOneAndUpdate(
           { email },
           { menu: newMenu },
