@@ -5,75 +5,77 @@ import Link from "next/link";
 import Header from "../components/Header";
 
 const hotel = [
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
-	{
-		img: i1,
-		name: "xyz",
-	},
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
+  {
+    img: i1,
+    name: "xyz",
+  },
 ];
 
 export default function Home() {
-	return (
+  return (
     <Wrapper>
       <Header />
       <Message>Hotels nearby you...</Message>
-			<HotelGrid>
-				{hotel.map((item, index) => {
-					return (
-						<Link href="/menu">
-							<HotelCard>
-								<Image
-									height="1000"
-									src={item.img}
-									alt="Sunset in the mountains"
-									placeholder="blur"
-									priority
-								/>
-								<HotelBody>
-									<div className="font-bold text-xl mb-2 text-center">{item.name}</div>
-								</HotelBody>
-							</HotelCard>
-						</Link>
-					);
-				})}
-			</HotelGrid>
-		</Wrapper>
-	);
+      <HotelGrid>
+        {hotel.map((item, index) => {
+          return (
+            <Link href="/menu" key={index}>
+              <HotelCard>
+                <Image
+                  height="1000"
+                  src={item.img}
+                  alt="Sunset in the mountains"
+                  placeholder="blur"
+                  priority
+                />
+                <HotelBody>
+                  <div className="font-bold text-xl mb-2 text-center">
+                    {item.name}
+                  </div>
+                </HotelBody>
+              </HotelCard>
+            </Link>
+          );
+        })}
+      </HotelGrid>
+    </Wrapper>
+  );
 }
 // flex bg-white text-black h-screen items-center justify-center
 const Wrapper = tw.div`
