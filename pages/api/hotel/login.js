@@ -21,10 +21,10 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: "Invalid Credentials" });
 
     const hotelData = {
-			name: existingHotel.name,
-			email: existingHotel.email,
-			id: existingHotel._id.toString(),
-		};
+      name: existingHotel.name,
+      email: existingHotel.email,
+      id: existingHotel._id.toString(),
+    };
 
     const token = jwt.sign(
       { email: existingHotel.email, id: existingHotel._id },

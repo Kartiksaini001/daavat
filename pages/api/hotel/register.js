@@ -26,10 +26,10 @@ export default async function handler(req, res) {
     });
 
     const hotelData = {
-			name: result.name,
-			email: result.email,
-			id: result._id.toString(),
-		};
+      name: result.name,
+      email: result.email,
+      id: result._id.toString(),
+    };
 
     const token = jwt.sign(
       { email: result.email, id: result._id },

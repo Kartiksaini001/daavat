@@ -3,8 +3,6 @@ import tw from "tailwind-styled-components";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-import { MenuList } from "../../data/MenuList";
-
 const AddMenu = () => {
   const [title, setTitle] = useState(null);
   const [email, setEmail] = useState(null);

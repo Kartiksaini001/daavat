@@ -1,11 +1,11 @@
 import tw from "tailwind-styled-components";
-import Image from "next/image";
 import Link from "next/link";
 import AuthContext from "../../contexts/authContext";
 import axios from "axios";
 import { useEffect, useState, useContext } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import HotelData from "../../components/HotelData.js";
 
 const AblyReceiveOrder = dynamic(
   () => import("../../components/AblyReceiveOrder"),
@@ -15,7 +15,7 @@ const AblyReceiveOrder = dynamic(
 const initialValue = [];
 
 export default function Dashboard() {
-  const router = useRouter;
+  const router = useRouter();
   const { user } = useContext(AuthContext);
   const [menu, setMenu] = useState(initialValue);
   const [load, setLoad] = useState(true);
@@ -24,19 +24,28 @@ export default function Dashboard() {
   const [del, setDel] = useState(null);
   const [alert, setAlert] = useState(false);
   const [email, setEmail] = useState(null);
+  const [name, setName] = useState(null);
   const [values, setValues] = useState({
     lat: "",
     long: "",
     minOrder: "",
   });
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
+  const [min, setMin] = useState(null);
 
   useEffect(() => {
     const newUser = JSON.parse(localStorage.getItem("profile"));
     const id = newUser.data.id;
     const temp = newUser.data.email;
+    const tem = newUser.data.name;
     axios.get("/api/hotel/menu", { params: { id } }).then((res) => {
       setMenu(res.data.menu);
+      setLat(res.data.mapLocation.lat);
+      setLng(res.data.mapLocation.lng);
+      setMin(res.data.minOrder);
       setEmail(temp);
+      setName(tem);
       setLoad(false);
     });
   }, []);
@@ -50,24 +59,37 @@ export default function Dashboard() {
 
     setOpen(!isOpen);
   };
+  const isFormValid = () => {
+    if (values.lat === "" || values.long === "" || values.minOrder === "") {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const newData = {
-      email: email,
-      mapLocation: {
-        lat: values.lat,
-        lng: values.long,
-      },
-      minOrder: values.minOrder,
-    };
-    axios
-      .patch("/api/hotel/updateHotel", newData)
-      .then((res) => {
-        console.log(res);
-        router.push("/hotel/dashboard");
-      })
-      .catch((err) => console.log(err));
+    if (!isFormValid()) {
+      window.alert("FILL ALL FIELDS");
+    } else {
+      e.preventDefault();
+      const temp = values;
+      const newData = {
+        email: email,
+        mapLocation: {
+          lat: values.lat,
+          lng: values.long,
+        },
+        minOrder: values.minOrder,
+      };
+      axios
+        .patch("/api/hotel/updateHotel", newData)
+        .then((res) => {
+          console.log(res);
+          setValues(temp);
+          router.push("/");
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   const handleChange = () => (e) => {
@@ -130,25 +152,13 @@ export default function Dashboard() {
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
-      <div className="text-4xl mb-10 ">
-        <p className="font-extrabold"> Hello,</p>
+      <div className="mb-10 ">
+        <p className="font-extrabold text-2xl"> Hello, Admin of {name}</p>
+        <HotelData lat={lat} lng={lng} min={min} />
       </div>
       <HotelForm onSubmit={(e) => handleSubmit(e)}>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="flex flex-wrap -mx-3 mb-2">
-            <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                Longitude
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="long"
-                type="text"
-                placeholder="78.120"
-                value={values.long}
-                onChange={handleChange()}
-              />
-            </div>
             <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
               <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                 Latitude
@@ -157,8 +167,20 @@ export default function Dashboard() {
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="lat"
                 type="text"
-                placeholder="102.87"
                 value={values.lat}
+                onChange={handleChange()}
+              />
+            </div>
+            <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                Longitude
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="long"
+                type="text"
+                // placeholder="102.87"
+                value={values.long}
                 onChange={handleChange()}
               />
             </div>
@@ -277,7 +299,7 @@ const Wrapper = tw.div`
 `;
 
 const HotelForm = tw.form`
-mb-6 w-full max-w-lg  ml-auto mr-auto
+mb-15 w-full max-w-lg  ml-auto mr-auto
 `;
 
 const Menu = tw.div`
@@ -285,7 +307,7 @@ mt-16
 `;
 
 const HotelCard = tw.div`
-  max-w-sm rounded pt-16 p-9 overflow-hidden shadow-lg  transform hover:scale-105 hover:bg-blue-200 transition m-auto my-4
+  max-w-sm rounded pt-16 p-9 overflow-hidden shadow-lg  transform hover:scale-105 hover:bg-blue-200 transition m-auto my-4 bg-gray-200
 `;
 const HotelBody = tw.div`
  py-4 h-2/5
@@ -293,4 +315,7 @@ const HotelBody = tw.div`
 
 const HotelGrid = tw.div`
 px-10 grid md:grid-cols-2 md:gap-4 lg:grid-cols-3 lg:gap-6 sm:grid-cols-1
+`;
+const Footer = tw.div`
+	flex justify-center text-sm mt-8 text-transparent font-medium bg-gradient-to-r from-green-700 to-blue-800 bg-clip-text font-bold font-serif pb-5
 `;

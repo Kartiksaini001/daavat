@@ -139,93 +139,99 @@ export default function Auth() {
   };
 
   return (
-		<Wrapper>
-			<UserType>
-				<TypeSelect selected={!isHotel} onClick={() => setIsHotel(false)}>
-					Customer
-				</TypeSelect>
-				<TypeSelect selected={isHotel} onClick={() => setIsHotel(true)}>
-					Restaurant
-				</TypeSelect>
-			</UserType>
-			<FormContainer>
-				<FormHeader>{isLogin ? "Login" : "Register"}</FormHeader>
-				<Form onSubmit={handleSubmit}>
-					{!isLogin && (
-						<FormField>
-							<Label>
-								Name:
-								<Input name="name" type="text" required />
-							</Label>
-						</FormField>
-					)}
-					<FormField>
-						<Label>
-							Email:
-							<Input name="email" type="email" required />
-						</Label>
-					</FormField>
-					<FormField>
-						<Label>
-							Password:
-							<Input name="password" type="password" required />
-						</Label>
-					</FormField>
-					{!isLogin && (
-						<FormField>
-							<Label>
-								Confirm Password:
-								<Input name="confirmPassword" type="password" required />
-								<ErrorBox>{error}</ErrorBox>
-							</Label>
-						</FormField>
-					)}
-					<Submit type="submit">{isLogin ? "Login" : "Register"}</Submit>
-					<GoogleLogin
-						clientId="614359932767-pp8vo3tklcug7q5rhlbt5ejp55bruekj.apps.googleusercontent.com"
-						render={(renderProps) => (
-							<GoogleBtn
-								onClick={renderProps.onClick}
-								disabled={renderProps.disabled}
-							>
-								<span>
-									<svg
-										style={{ width: "20px", height: "20px" }}
-										viewBox="0 0 24 24"
-									>
-										<path
-											fill="currentColor"
-											d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z"
-										/>
-									</svg>
-								</span>
-								&nbsp;&nbsp;Login with Google
-							</GoogleBtn>
-						)}
-						onSuccess={googleSuccess}
-						onFailure={googleFailure}
-						cookiePolicy="single_host_origin"
-					/>
-				</Form>
-				<ToggleForm onClick={() => setIsLogin(!isLogin)}>
-					{isLogin
-						? "Don't have an account? Register"
-						: "Already have an account? Login"}
-				</ToggleForm>
-			</FormContainer>
-		</Wrapper>
-	);
+    <Wrapper>
+      <UserType>
+        <TypeSelect selected={!isHotel} onClick={() => setIsHotel(false)}>
+          Customer
+        </TypeSelect>
+        <TypeSelect selected={isHotel} onClick={() => setIsHotel(true)}>
+          Restaurant
+        </TypeSelect>
+      </UserType>
+      <FormContainer>
+        <FormHeader>{isLogin ? "Login" : "Register"}</FormHeader>
+        <Form onSubmit={handleSubmit}>
+          {!isLogin && (
+            <FormField>
+              <Label>
+                Name:
+                <Input name="name" type="text" required />
+              </Label>
+            </FormField>
+          )}
+          <FormField>
+            <Label>
+              Email:
+              <Input name="email" type="email" required />
+            </Label>
+          </FormField>
+          <FormField>
+            <Label>
+              Password:
+              <Input name="password" type="password" required />
+            </Label>
+          </FormField>
+          {!isLogin && (
+            <FormField>
+              <Label>
+                Confirm Password:
+                <Input name="confirmPassword" type="password" required />
+                <ErrorBox>{error}</ErrorBox>
+              </Label>
+            </FormField>
+          )}
+          <Submit type="submit">{isLogin ? "Login" : "Register"}</Submit>
+          <GoogleLogin
+            clientId="614359932767-pp8vo3tklcug7q5rhlbt5ejp55bruekj.apps.googleusercontent.com"
+            render={(renderProps) => (
+              <GoogleBtn
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+              >
+                <span>
+                  <svg
+                    style={{ width: "20px", height: "20px" }}
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.9 8.2,4.73 12.2,4.73C15.29,4.73 17.1,6.7 17.1,6.7L19,4.72C19,4.72 16.56,2 12.1,2C6.42,2 2.03,6.8 2.03,12C2.03,17.05 6.16,22 12.25,22C17.6,22 21.5,18.33 21.5,12.91C21.5,11.76 21.35,11.1 21.35,11.1V11.1Z"
+                    />
+                  </svg>
+                </span>
+                &nbsp;&nbsp;Login with Google
+              </GoogleBtn>
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy="single_host_origin"
+          />
+        </Form>
+        <ToggleForm onClick={() => setIsLogin(!isLogin)}>
+          {isLogin
+            ? "Don't have an account? Register"
+            : "Already have an account? Login"}
+        </ToggleForm>
+      </FormContainer>
+      <Footer>&copy;2021 Made by Alpha_zero</Footer>
+    </Wrapper>
+  );
 }
-
+const Footer = tw.div`
+	flex justify-center text-sm mt-8 text-transparent font-medium bg-gradient-to-r from-green-700 to-blue-800 bg-clip-text font-bold font-serif
+`;
 const Wrapper = tw.div`
-    bg-gray-200 py-10 h-screen pt-24
+    bg-gray-200 py-10 pt-24 min-h-screen
 `;
 const UserType = tw.div`
   mx-auto w-max space-x-4 mb-5
 `;
 const TypeSelect = tw.span`
   cursor-pointer px-4 py-2 rounded-lg
-  ${(p) => (p.selected ? "bg-blue-500 text-xl" : "bg-gray-400")}
+  ${(p) =>
+    p.selected
+      ? "bg-black text-white text-center text-xl"
+      : "bg-gray-400 text-center"}
 `;
 const FormHeader = tw.div`
     text-center font-bold text-2xl my-2
@@ -244,13 +250,13 @@ const Input = tw.input`
     block rounded-lg bg-gray-200 w-full p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none
 `;
 const Submit = tw.button`
-    flex bg-blue-400 w-max px-4 py-2 mt-7 rounded-lg hover:bg-blue-500 mx-auto
+    flex bg-red-400 w-max px-4 py-2 mt-7 rounded-lg hover:bg-red-500 mx-auto
 `;
 const ToggleForm = tw.button`
     hover:bg-gray-200 px-2 py-1 rounded mt-4
 `;
 const GoogleBtn = tw.button`
-    flex mt-4 items-center mx-auto bg-blue-400 px-4 py-2 rounded-lg hover:bg-blue-500
+    flex mt-4 items-center mx-auto bg-red-400 px-4 py-2 rounded-lg hover:bg-red-500
 `;
 const ErrorBox = tw.span`
   text-sm text-red-600
