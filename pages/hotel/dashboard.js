@@ -41,9 +41,11 @@ export default function Dashboard() {
     const tem = newUser.data.name;
     axios.get("/api/hotel/menu", { params: { id } }).then((res) => {
       setMenu(res.data.menu);
-      setLat(res.data.mapLocation.lat);
-      setLng(res.data.mapLocation.lng);
-      setMin(res.data.minOrder);
+      if (res.data.mapLocation) {
+        setLat(res.data.mapLocation.lat);
+        setLng(res.data.mapLocation.lng);
+        setMin(res.data.minOrder);
+      }
       setEmail(temp);
       setName(tem);
       setLoad(false);

@@ -12,7 +12,7 @@ export default function Header() {
 
   const logout = () => {
     setIsOpen(!isOpen);
-    localStorage.removeItem("profile");
+    if (typeof window !== "undefined") localStorage.removeItem("profile");
     setUser(null);
     router.push("/auth");
   };

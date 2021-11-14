@@ -13,6 +13,7 @@ export default function Auth() {
   const router = useRouter();
 
   const googleSuccess = async (res) => {
+    if (typeof window === "undefined") return;
     // result is an object {email, familyName, givenName, googleId, imageUrl, name}
     const { name, email, googleId } = res?.profileObj;
     // const token = res?.tokenId;
@@ -74,6 +75,8 @@ export default function Auth() {
   };
 
   const submitData = (route, { name, email, password, confirmPassword }) => {
+    if (typeof window === "undefined") return;
+
     if (isLogin) {
       // Login
       axios
