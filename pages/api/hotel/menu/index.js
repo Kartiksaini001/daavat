@@ -7,9 +7,9 @@ export default async function handler(req, res) {
   switch (req.method) {
     case "GET":
       try {
-        const hotel = await Hotel.findOne({email: req.query.email});
+        const hotel = await Hotel.findById(req.query.id);
 
-        res.status(200).json(hotel.menu);
+        res.status(200).json(hotel);
       } catch (error) {
         res.status(400).json({ msg: error.msg });
       }

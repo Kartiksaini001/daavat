@@ -4,7 +4,6 @@ import Link from "next/link";
 import Header from "../../components/Header.js";
 import { useContext } from "react";
 import AuthContext from "../../contexts/authContext";
-import Map from "../../components/Map.js";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -19,12 +18,18 @@ export default function Dashboard() {
   const [del, setDel] = useState(null);
   const [alert, setAlert] = useState(false);
   const [email, setEmail] = useState(null);
+  const [values, setValues] = useState({
+    lat: "",
+    long: "",
+    minOrder: "",
+  });
 
   useEffect(() => {
     const newUser = JSON.parse(localStorage.getItem("profile"));
-    const temp = newUser.data.email;
-    axios.get("/api/hotel/menu", { params: { email: temp } }).then((res) => {
-      setMenu(res.data);
+    const id = newUser.data.id;
+    const temp=newUser.data.email;
+    axios.get("/api/hotel/menu", { params:{id}}).then((res) => {
+      setMenu(res.data.menu);
       setEmail(temp);
     });
   }, []);
@@ -38,6 +43,30 @@ export default function Dashboard() {
 
     setOpen(!isOpen);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newData = {
+      email: email,
+      mapLocation:{
+        lat: values.lat,
+        lng: values.long,
+      },
+      minOrder: values.minOrder,
+    };
+    axios
+      .patch("/api/hotel/updateHotel", newData)
+      .then((res) => {
+        console.log(res);
+        router.push("/hotel/dashboard");
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleChange = () => (e) => {
+    setValues({ ...values, [e.target.id]: e.target.value });
+  };
+
 
   const handleDelete = async () => {
     const id = menu[del]._id;
@@ -94,24 +123,98 @@ export default function Dashboard() {
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
-      <MapContainer>
-        <Map />
-      </MapContainer>
+      <div className="text-4xl mb-10 ">
+         <p className="font-extrabold"> Hello,</p>
+          </div>
+      <HotelForm  onSubmit={(e) => handleSubmit(e)}>
+        <div className="flex flex-wrap -mx-3 mb-6">
+          <div className="flex flex-wrap -mx-3 mb-2">
+            <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              >
+                Longitude
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="long"
+                type="text"
+                placeholder="78.120"
+                value={values.long}
+              onChange={handleChange()}
+              />
+            </div>
+            <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+              >
+                Latitude
+              </label>
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="lat"
+                type="text"
+                placeholder="102.87"
+                value={values.lat}
+              onChange={handleChange()}
+              />
+            </div>
+            <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+              <label
+                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
+                for="min-order"
+              >
+                Min Order
+              </label>
+              <div className="relative">
+              <input
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                id="minOrder"
+                type="number"
+                placeholder="500"
+                value={values.minOrder}
+                onChange={handleChange()}
+              />
+              </div>
+            </div>
+            <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0 mt-6 ">
+            
+             <input
+                className="appearance-none block w-full bg-black-200 text-white-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer"
+                id="grid-city"
+                type="submit"
+                value="Update"
+              />
+            </div>
+          </div>
+        </div>
+      </HotelForm>
       <Menu>
-        <Link href="./addmenu">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-12 w-12"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </Link>
+        <div className="grid place-items-center">
+        <button className="">
+          <Link href="./addmenu">
+           
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-12 w-12 ml-3"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                clipRule="evenodd"
+              />
+            </svg>
+           
+          </Link>
+          <strong className="font-bold text-lg block">
+          Add Dish
+          </strong>
+        </button>
+        </div>
+        <br />
+        <br /> <br /> <br /> <br /> <br />
         {alert && (
           <div
             className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mt-5 mb-5"
@@ -120,7 +223,7 @@ export default function Dashboard() {
             <strong className="font-bold">
               Foodies want it back &nbsp; &nbsp;&nbsp;
             </strong>
-          <span className="block sm:inline">{`"${gone}"`} is deleted</span>
+            <span className="block sm:inline">{`"${gone}"`} is deleted</span>
           </div>
         )}
         <HotelGrid>
@@ -128,7 +231,7 @@ export default function Dashboard() {
             menu.map((item, index) => {
               return (
                 <div key={index}>
-                  <a onClick={() => toggle(index)}>
+                  <a className="cursor-pointer" onClick={() => toggle(index)}>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-5 w-5"
@@ -166,8 +269,8 @@ const Wrapper = tw.div`
   p-4 flex flex-col h-screen pt-24
 `;
 
-const MapContainer = tw.div`
-mb-6
+const HotelForm = tw.form`
+mb-6 w-full max-w-lg  ml-auto mr-auto
 `;
 
 const Menu = tw.div`
@@ -175,7 +278,7 @@ mt-16
 `;
 
 const HotelCard = tw.div`
-  max-w-sm rounded pt-16 p-9 overflow-hidden shadow-lg cursor-pointer transform hover:scale-105 hover:bg-blue-200 transition m-auto my-4
+  max-w-sm rounded pt-16 p-9 overflow-hidden shadow-lg  transform hover:scale-105 hover:bg-blue-200 transition m-auto my-4
 `;
 const HotelBody = tw.div`
  py-4 h-2/5
