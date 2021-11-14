@@ -131,7 +131,6 @@ export default function Dashboard() {
             <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                for="number"
               >
                 Longitude
               </label>
@@ -147,7 +146,6 @@ export default function Dashboard() {
             <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                for="grid-city"
               >
                 Latitude
               </label>
