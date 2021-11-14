@@ -10,12 +10,12 @@ export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
 	const router = useRouter();
 
-	const logout = () => {
-		setIsOpen(!isOpen);
-		localStorage.removeItem("profile");
-		setUser(null);
-		router.reload();
-	};
+  const logout = () => {
+    setIsOpen(!isOpen);
+    localStorage.removeItem("profile");
+    setUser(null);
+    router.push("/auth");
+  };
 
 	return (
 		<Wrapper>

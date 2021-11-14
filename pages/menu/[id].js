@@ -12,6 +12,7 @@ const Menu = () => {
   const [isOpen, setOpen] = useState(false);
   //   const [MenuList, setMenu] = useState(initialValue);
   const [hotel, setHotel] = useState(null);
+  const [load, setLoad] = useState(true);
   const router = useRouter();
   const { id } = router.query;
   var newUser;
@@ -22,6 +23,7 @@ const Menu = () => {
     axios.get("/api/hotel/menu", { params: { id } }).then((res) => {
       console.log(res);
       setHotel(res.data);
+	  setLoad(false);
     });
   }, []);
 
@@ -101,8 +103,15 @@ const Menu = () => {
       <Header>
         <HotelName>Welcome to {hotel?.name}</HotelName>
       </Header>
+	  {load &&
+            				<div
+                    className={
+                      "border-4 border-transparent h-8 w-8 rounded-full border-t-black animate-spin mt-8 block "
+                    }
+                  ></div>
+          }
       <ItemList>
-        {hotel &&
+        {!load &&
           hotel.menu.map((item, key) => (
             <ItemCard
               key={key}

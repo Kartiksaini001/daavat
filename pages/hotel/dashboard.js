@@ -31,6 +31,7 @@ export default function Dashboard() {
     axios.get("/api/hotel/menu", { params:{id}}).then((res) => {
       setMenu(res.data.menu);
       setEmail(temp);
+      setLoad(false);
     });
   }, []);
 
@@ -89,7 +90,7 @@ export default function Dashboard() {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h3 className="text-3xl font-semibold">
-                    You want to delete {`"${gone}"`}
+                    You want to remove {`"${gone}"`}
                   </h3>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -212,6 +213,13 @@ export default function Dashboard() {
           Add Dish
           </strong>
         </button>
+        {load &&
+            				<div
+                    className={
+                      "border-4 border-transparent h-8 w-8 rounded-full border-t-black animate-spin mt-8 block "
+                    }
+                  ></div>
+          }
         </div>
         <br />
         <br /> <br /> <br /> <br /> <br />
@@ -221,13 +229,13 @@ export default function Dashboard() {
             role="alert"
           >
             <strong className="font-bold">
-              Foodies want it back &nbsp; &nbsp;&nbsp;
+              Foodies want it back but sadly&nbsp; &nbsp;&nbsp;
             </strong>
-            <span className="block sm:inline">{`"${gone}"`} is deleted</span>
+            <span className="block sm:inline">{`"${gone}"`} is removed from your offerings</span>
           </div>
         )}
         <HotelGrid>
-          {menu &&
+          {!load &&
             menu.map((item, index) => {
               return (
                 <div key={index}>

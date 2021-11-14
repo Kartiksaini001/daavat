@@ -55,6 +55,7 @@ export default function Home() {
   const [hotel, setHotel] = useState(null);
   const router = useRouter();
   const [userId, setUserId] = useState("");
+  const [load, setLoad] = useState(true);
 
   const allHotel = async (res) => {
     const result = { googleId: sessionStorage.getItem("googleId") };
@@ -64,6 +65,7 @@ export default function Home() {
         .get("./api/hotel")
         .then((response) => {
           setHotel(response.data);
+		  setLoad(false);
           console.log(response.data);
         })
         .catch((error) => {
@@ -87,41 +89,47 @@ export default function Home() {
   }, []);
 
   return (
-		<>
-			<Head>
-				<title>Daavat</title>
-				<link rel="icon" href="/favicon.ico" />
-			</Head>
-			<Wrapper>
-				<Message>Hotels nearby you...</Message>
-				<HotelGrid>
-					{hotel &&
-						hotel.map((item, index) => {
-							console.log(item.id);
-							return (
-								<Link href={`/menu/${item.id}`} key={index}>
-									<HotelCard>
-										<Image
-											height="2000"
-											src={i1}
-											alt="Sunset in the mountains"
-											placeholder="blur"
-											priority
-										/>
-										<HotelBody>
-											<div className="font-bold text-xl mb-2 text-center">
-												{item.name}
-											</div>
-										</HotelBody>
-									</HotelCard>
-								</Link>
-							);
-						})}
-				</HotelGrid>
-				<Footer>&copy;2021 Made by Alpha_zero</Footer>
-			</Wrapper>
-		</>
-	);
+    <>
+      <Head>
+        <title>Daavat</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Wrapper>
+        <Message>Hotels nearby you...</Message>
+		{load &&
+            				<div
+                    className={
+                      "border-4 border-transparent h-8 w-8 rounded-full border-t-black animate-spin mt-8 block ml-8"
+                    }
+                  ></div>
+          }
+        <HotelGrid>
+          {!load &&
+            hotel.map((item, index) => {
+              console.log(item.id);
+              return (
+                <Link href={`/menu/${item.id}`} key={index}>
+                  <HotelCard>
+                    <Image
+                      height="1000"
+                      src={i1}
+                      alt="Sunset in the mountains"
+                      placeholder="blur"
+                      priority
+                    />
+                    <HotelBody>
+                      <div className="font-bold text-xl mb-2 text-center">
+                        {item.name}
+                      </div>
+                    </HotelBody>
+                  </HotelCard>
+                </Link>
+              );
+            })}
+        </HotelGrid>
+      </Wrapper>
+    </>
+  );
 }
 // flex bg-white text-black h-screen items-center justify-center
 const Wrapper = tw.div`
