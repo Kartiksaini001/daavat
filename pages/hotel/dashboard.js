@@ -176,8 +176,9 @@ export default function Dashboard() {
               />
               </div>
             </div>
-            <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0 mt-4 ">
-              <input
+            <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0 mt-6 ">
+            
+             <input
                 className="appearance-none block w-full bg-black-200 text-white-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer"
                 id="grid-city"
                 type="submit"
@@ -188,11 +189,13 @@ export default function Dashboard() {
         </div>
       </HotelForm>
       <Menu>
-        <button className="mx-20">
+        <div className="grid place-items-center">
+        <button className="">
           <Link href="./addmenu">
+           
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-12 w-12"
+              className="h-12 w-12 ml-3"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -206,8 +209,9 @@ export default function Dashboard() {
           </Link>
           <strong className="font-bold text-lg block">
           Add Dish
-            </strong>
+          </strong>
         </button>
+        </div>
         <br />
         <br /> <br /> <br /> <br /> <br />
         {alert && (
@@ -265,7 +269,7 @@ const Wrapper = tw.div`
 `;
 
 const HotelForm = tw.form`
-mb-6 w-full max-w-lg ml-64
+mb-6 w-full max-w-lg  ml-auto mr-auto
 `;
 
 const Menu = tw.div`
