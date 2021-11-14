@@ -7,31 +7,31 @@ export default function ItemCard({ initialItem, totalPrice, settotalPrice }) {
 		<Wrapper>
 			{item.count > 0 && (
 				<Counter>
-					Count: {item.count}
+					Qty: {item.count}
 					<CounterButtonContainer>
 						<PlusButton
 							onClick={() => {
 								setItem({ ...item, count: item.count + 1 });
-                settotalPrice(totalPrice + item.price);
-                initialItem.count = initialItem.count + 1;
+								settotalPrice(totalPrice + item.price);
+								initialItem.count = initialItem.count + 1;
 							}}
 						>
-							+
+							<span className={"mx-auto p-0 m-0 h-full"}>+</span>
 						</PlusButton>
 						<MinusButton
 							onClick={() => {
 								setItem({ ...item, count: item.count - 1 });
-                settotalPrice(totalPrice - item.price);
-                initialItem.count = initialItem.count - 1;
+								settotalPrice(totalPrice - item.price);
+								initialItem.count = initialItem.count - 1;
 							}}
 						>
-							-
+							<span className={"mx-auto p-0 m-0 h-full"}>-</span>
 						</MinusButton>
 					</CounterButtonContainer>
 				</Counter>
 			)}
 			<Item
-        onClick={() => {
+				onClick={() => {
 					if (!item.count) {
 						settotalPrice(totalPrice + item.price);
 						item.count = 1;
@@ -43,7 +43,7 @@ export default function ItemCard({ initialItem, totalPrice, settotalPrice }) {
 				className={`${
 					!item.count
 						? "border-blue-400 border"
-						: "border-green-400 bg-green-200 scale-95 border-4"
+						: "border-blue-300 bg-black text-white scale-95 border-4"
 				}`}
 			>
 				<Name>{item.name}</Name>
@@ -55,28 +55,29 @@ export default function ItemCard({ initialItem, totalPrice, settotalPrice }) {
 }
 
 const Wrapper = tw.div`
-	mx-auto mt-4
+	mx-auto mt-4 w-full mx-auto flex flex-col px-4
 `;
 const Item = tw.button`
-  flex p-4 justify-between items-center py-8 rounded-lg transform hover:bg-opacity-75 transition shadow-md active:bg-green-100 bg-gray-200
+  flex p-4 justify-between items-center py-8 rounded-lg transform hover:bg-opacity-75 transition shadow-md active:bg-green-100 bg-gray-200 w-full md:w-1/2 mx-auto
 `;
 const Name = tw.div`
   font-medium
 `;
 const Desc = tw.div`
-  text-sm mx-10 text-center flex-grow-0 w-1/2 text-gray-800
+  text-sm mx-10 text-center flex-grow-0 w-1/2
 `;
 const Price = tw.div`
   font-medium
 `;
 const Counter = tw.div`
-	flex items-center
+	flex items-center mx-auto border-t-2 w-full md:w-1/2 pt-2 px-2 rounded-lg justify-between
 `;
 const CounterButtonContainer = tw.div`
+	flex items-center p-1
 `;
 const PlusButton = tw.button`
-	mx-2 text-2xl bg-green-500 p-1 px-2 rounded-lg
+	mx-2 text-xl rounded-full h-8 w-8 flex items-center ring-2
 `;
 const MinusButton = tw.button`
-	mx-2 text-2xl bg-red-500 p-1 px-2 rounded-lg
+	mx-2 text-xl text-white bg-black rounded-full h-8 w-8 flex items-center
 `;

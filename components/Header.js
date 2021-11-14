@@ -6,44 +6,46 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 export default function Header() {
-  const { user, setUser } = useContext(AuthContext);
-  const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
+	const { user, setUser } = useContext(AuthContext);
+	const [isOpen, setIsOpen] = useState(false);
+	const router = useRouter();
 
-  const logout = () => {
-    setIsOpen(!isOpen);
-    localStorage.removeItem("profile");
-    setUser(null);
-    router.reload();
-  };
+	const logout = () => {
+		setIsOpen(!isOpen);
+		localStorage.removeItem("profile");
+		setUser(null);
+		router.reload();
+	};
 
-  return (
-    <Wrapper>
-      <Link href="/"><Title>Daavat</Title></Link>
-      <UserIcon>
-        {user && (
-          <Image
-            src={`https://ui-avatars.com/api/?background=fcd400&color=363636&rounded=true&bold=true&length=1&size=128&name=${user?.data?.name}`}
-            alt="Profile"
-            height="42"
-            width="42"
-            onClick={() => setIsOpen(!isOpen)}
-            className="cursor-pointer"
-          />
-        )}
-        <Dropdown isopen={isOpen}>
-          <ListItem onClick={logout}>Logout</ListItem>
-        </Dropdown>
-      </UserIcon>
-    </Wrapper>
-  );
+	return (
+		<Wrapper>
+			<Link href="/">
+				<Title>Daavat</Title>
+			</Link>
+			<UserIcon>
+				{user && (
+					<Image
+						src={`https://ui-avatars.com/api/?background=0d9b9b&color=ffffff&rounded=true&bold=true&length=1&size=128&name=${user?.data?.name}`}
+						alt="Profile"
+						height="42"
+						width="42"
+						onClick={() => setIsOpen(!isOpen)}
+						className="cursor-pointer"
+					/>
+				)}
+				<Dropdown isopen={isOpen}>
+					<ListItem onClick={logout}>Logout</ListItem>
+				</Dropdown>
+			</UserIcon>
+		</Wrapper>
+	);
 }
 
 const Wrapper = tw.div`
-  p-4 mb-4 fixed bg-gray-100 w-full flex justify-between z-50
+  p-4 mb-4 fixed w-full flex justify-between z-50 bg-gray-200
 `;
 const Title = tw.div`
-  text-3xl font-medium pl-4 cursor-pointer
+  text-3xl px-4 cursor-pointer text-transparent bg-gradient-to-r from-green-400 to-blue-500 bg-clip-text font-bold font-serif
 `;
 const UserIcon = tw.div`
 	pr-4

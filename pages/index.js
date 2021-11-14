@@ -87,40 +87,41 @@ export default function Home() {
   }, []);
 
   return (
-    <>
-      <Head>
-        <title>Daavat</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Wrapper>
-        <Message>Hotels nearby you...</Message>
-        <HotelGrid>
-          {hotel &&
-            hotel.map((item, index) => {
-              console.log(item.id);
-              return (
-                <Link href={`/menu/${item.id}`} key={index}>
-                  <HotelCard>
-                    <Image
-                      height="1000"
-                      src={i1}
-                      alt="Sunset in the mountains"
-                      placeholder="blur"
-                      priority
-                    />
-                    <HotelBody>
-                      <div className="font-bold text-xl mb-2 text-center">
-                        {item.name}
-                      </div>
-                    </HotelBody>
-                  </HotelCard>
-                </Link>
-              );
-            })}
-        </HotelGrid>
-      </Wrapper>
-    </>
-  );
+		<>
+			<Head>
+				<title>Daavat</title>
+				<link rel="icon" href="/favicon.ico" />
+			</Head>
+			<Wrapper>
+				<Message>Hotels nearby you...</Message>
+				<HotelGrid>
+					{hotel &&
+						hotel.map((item, index) => {
+							console.log(item.id);
+							return (
+								<Link href={`/menu/${item.id}`} key={index}>
+									<HotelCard>
+										<Image
+											height="2000"
+											src={i1}
+											alt="Sunset in the mountains"
+											placeholder="blur"
+											priority
+										/>
+										<HotelBody>
+											<div className="font-bold text-xl mb-2 text-center">
+												{item.name}
+											</div>
+										</HotelBody>
+									</HotelCard>
+								</Link>
+							);
+						})}
+				</HotelGrid>
+				<Footer>&copy;2021 Made by Alpha_zero</Footer>
+			</Wrapper>
+		</>
+	);
 }
 // flex bg-white text-black h-screen items-center justify-center
 const Wrapper = tw.div`
@@ -138,4 +139,7 @@ px-6 py-4 h-2/5
 
 const HotelGrid = tw.div`
 px-10 grid md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:gap-6 sm:grid-cols-1
+`;
+const Footer = tw.div`
+	flex justify-center text-sm mt-4 text-transparent font-medium bg-gradient-to-r from-green-700 to-blue-800 bg-clip-text font-bold font-serif
 `;
