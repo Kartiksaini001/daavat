@@ -55,6 +55,7 @@ export default function Home() {
   const [hotel, setHotel] = useState(null);
   const router = useRouter();
   const [userId, setUserId] = useState("");
+  const [load, setLoad] = useState(true);
 
   const allHotel = async (res) => {
     const result = { googleId: sessionStorage.getItem("googleId") };
@@ -64,6 +65,7 @@ export default function Home() {
         .get("./api/hotel")
         .then((response) => {
           setHotel(response.data);
+		  setLoad(false);
           console.log(response.data);
         })
         .catch((error) => {
@@ -151,8 +153,15 @@ export default function Home() {
       </Head>
       <Wrapper>
         <Message>Hotels nearby you...</Message>
+		{load &&
+            				<div
+                    className={
+                      "border-4 border-transparent h-8 w-8 rounded-full border-t-black animate-spin mt-8 block ml-8"
+                    }
+                  ></div>
+          }
         <HotelGrid>
-          {hotel &&
+          {!load &&
             hotel.map((item, index) => {
               console.log(item.id);
               return (

@@ -14,7 +14,7 @@ export default function Header() {
     setIsOpen(!isOpen);
     localStorage.removeItem("profile");
     setUser(null);
-    router.reload();
+    router.push("/auth");
   };
 
   return (
