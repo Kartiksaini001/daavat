@@ -16,7 +16,9 @@ export default function ItemCard({ initialItem, totalPrice, settotalPrice }) {
 								initialItem.count = initialItem.count + 1;
 							}}
 						>
-							<span className={"mx-auto p-0 m-0 h-full"}>+</span>
+							<span className={"mx-auto p-0 m-0 h-full font-bold text-xl"}>
+								+
+							</span>
 						</PlusButton>
 						<MinusButton
 							onClick={() => {
@@ -25,7 +27,9 @@ export default function ItemCard({ initialItem, totalPrice, settotalPrice }) {
 								initialItem.count = initialItem.count - 1;
 							}}
 						>
-							<span className={"mx-auto p-0 m-0 h-full"}>-</span>
+							<span className={"mx-auto p-0 m-0 h-full font-bold text-xl"}>
+								-
+							</span>
 						</MinusButton>
 					</CounterButtonContainer>
 				</Counter>
@@ -43,7 +47,7 @@ export default function ItemCard({ initialItem, totalPrice, settotalPrice }) {
 				className={`${
 					!item.count
 						? "border-blue-400 border"
-						: "border-blue-300 bg-black text-white scale-95 border-4"
+						: "border-blue-300 bg-green-200 scale-95 border-4"
 				}`}
 			>
 				<Name>{item.name}</Name>

@@ -212,11 +212,14 @@ export default function Auth() {
 						? "Don't have an account? Register"
 						: "Already have an account? Login"}
 				</ToggleForm>
-			</FormContainer>
+      </FormContainer>
+      <Footer>&copy;2021 Made by Alpha_zero</Footer>
 		</Wrapper>
 	);
 }
-
+const Footer = tw.div`
+	flex justify-center text-sm mt-8 text-transparent font-medium bg-gradient-to-r from-green-700 to-blue-800 bg-clip-text font-bold font-serif
+`;
 const Wrapper = tw.div`
     bg-gray-200 py-10 pt-24 min-h-screen
 `;
