@@ -24,7 +24,11 @@ export default function Auth() {
           .post("/api/hotel/google", { name, email, password: googleId })
           .then((res) => {
             console.log(res);
-            const newUser = { data: res.data.hotelData, isHotel: true, token: res.data.token };
+            const newUser = {
+              data: res.data.hotelData,
+              isHotel: true,
+              token: res.data.token,
+            };
             setUser(newUser);
             localStorage.setItem("profile", JSON.stringify(newUser));
             router.push("/hotel/dashboard");
@@ -34,7 +38,11 @@ export default function Auth() {
           .post("/api/user/google", { name, email, password: googleId })
           .then((res) => {
             console.log(res);
-            const newUser = { data: res.data.userData, isHotel: false, token: res.data.token };
+            const newUser = {
+              data: res.data.userData,
+              isHotel: false,
+              token: res.data.token,
+            };
             setUser(newUser);
             localStorage.setItem("profile", JSON.stringify(newUser));
             router.push("/");
@@ -75,12 +83,20 @@ export default function Auth() {
         })
         .then((res) => {
           if (isHotel) {
-            const newUser = { data: res.data.hotelData, isHotel: true, token: res.data.token };
+            const newUser = {
+              data: res.data.hotelData,
+              isHotel: true,
+              token: res.data.token,
+            };
             setUser(newUser);
             localStorage.setItem("profile", JSON.stringify(newUser));
             router.push("/hotel/dashboard");
           } else {
-            const newUser = { data: res.data.userData, isHotel: false, token: res.data.token };
+            const newUser = {
+              data: res.data.userData,
+              isHotel: false,
+              token: res.data.token,
+            };
             setUser(newUser);
             localStorage.setItem("profile", JSON.stringify(newUser));
             router.push("/");
@@ -100,12 +116,20 @@ export default function Auth() {
         })
         .then((res) => {
           if (isHotel) {
-            const newUser = { data: res.data.hotelData, isHotel: true, token: res.data.token };
+            const newUser = {
+              data: res.data.hotelData,
+              isHotel: true,
+              token: res.data.token,
+            };
             setUser(newUser);
             localStorage.setItem("profile", JSON.stringify(newUser));
             router.push("/hotel/dashboard");
           } else {
-            const newUser = { data: res.data.userData, isHotel: false, token: res.data.token };
+            const newUser = {
+              data: res.data.userData,
+              isHotel: false,
+              token: res.data.token,
+            };
             setUser(newUser);
             localStorage.setItem("profile", JSON.stringify(newUser));
             router.push("/");
