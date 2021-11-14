@@ -20,14 +20,14 @@ const AddMenu = () => {
     setEmail(newUser.data.email);
   }, []);
 
-  const handleChange = () => (e) => {
+  const handleChange = (e) => {
     setValues({ ...values, [e.target.id]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newDish = {
-      email: email,
+      email,
       name: values.name,
       desc: values.desc,
       price: values.price,
@@ -62,7 +62,7 @@ const AddMenu = () => {
               id="name"
               type="text"
               value={values.name}
-              onChange={handleChange()}
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -78,7 +78,7 @@ const AddMenu = () => {
           <div className="md:w-2/3">
             <textarea
               value={values.desc}
-              onChange={handleChange()}
+              onChange={handleChange}
               className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
               id="desc"
               type="text"
@@ -101,7 +101,7 @@ const AddMenu = () => {
               type="number"
               id="price"
               value={values.price}
-              onChange={handleChange()}
+              onChange={handleChange}
               placeholder="price"
             />
           </div>

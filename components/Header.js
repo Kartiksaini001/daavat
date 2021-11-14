@@ -19,7 +19,9 @@ export default function Header() {
 
   return (
     <Wrapper>
-      <Link href="/"><Title>Daavat</Title></Link>
+      <Link href="/">
+        <Title>Daavat</Title>
+      </Link>
       <UserIcon>
         {user && (
           <Image
@@ -31,9 +33,11 @@ export default function Header() {
             className="cursor-pointer"
           />
         )}
-        <Dropdown isopen={isOpen}>
-          <ListItem onClick={logout}>Logout</ListItem>
-        </Dropdown>
+        {isOpen && (
+          <Dropdown>
+            <ListItem onClick={logout}>Logout</ListItem>
+          </Dropdown>
+        )}
       </UserIcon>
     </Wrapper>
   );
@@ -50,7 +54,6 @@ const UserIcon = tw.div`
 `;
 const Dropdown = tw.div`
   absolute py-2 bg-white rounded-lg right-8 flex justify-center items-center shadow-md
-  ${(p) => (p.isopen ? "" : "hidden")}
 `;
 const ListItem = tw.button`
   w-full py-1 px-4 border-t-2 border-b-2 border-t-gray-200 border-b-gray-200 hover:bg-gray-200

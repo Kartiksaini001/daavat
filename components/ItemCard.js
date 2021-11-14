@@ -3,55 +3,55 @@ import { useState } from "react";
 
 export default function ItemCard({ initialItem, totalPrice, settotalPrice }) {
   const [item, setItem] = useState(initialItem);
-	return (
-		<Wrapper>
-			{item.count > 0 && (
-				<Counter>
-					Count: {item.count}
-					<CounterButtonContainer>
-						<PlusButton
-							onClick={() => {
-								setItem({ ...item, count: item.count + 1 });
+  return (
+    <Wrapper>
+      {item.count > 0 && (
+        <Counter>
+          Count: {item.count}
+          <CounterButtonContainer>
+            <PlusButton
+              onClick={() => {
+                setItem({ ...item, count: item.count + 1 });
                 settotalPrice(totalPrice + item.price);
                 initialItem.count = initialItem.count + 1;
-							}}
-						>
-							+
-						</PlusButton>
-						<MinusButton
-							onClick={() => {
-								setItem({ ...item, count: item.count - 1 });
+              }}
+            >
+              +
+            </PlusButton>
+            <MinusButton
+              onClick={() => {
+                setItem({ ...item, count: item.count - 1 });
                 settotalPrice(totalPrice - item.price);
                 initialItem.count = initialItem.count - 1;
-							}}
-						>
-							-
-						</MinusButton>
-					</CounterButtonContainer>
-				</Counter>
-			)}
-			<Item
+              }}
+            >
+              -
+            </MinusButton>
+          </CounterButtonContainer>
+        </Counter>
+      )}
+      <Item
         onClick={() => {
-					if (!item.count) {
-						settotalPrice(totalPrice + item.price);
-						item.count = 1;
-					} else {
-						settotalPrice(totalPrice - item.price);
-						item.count = item.count - 1;
-					}
-				}}
-				className={`${
-					!item.count
-						? "border-blue-400 border"
-						: "border-green-400 bg-green-200 scale-95 border-4"
-				}`}
-			>
-				<Name>{item.name}</Name>
-				<Desc>{item.desc}</Desc>
-				<Price>&#x20B9;{item.price}</Price>
-			</Item>
-		</Wrapper>
-	);
+          if (!item.count) {
+            settotalPrice(totalPrice + item.price);
+            item.count = 1;
+          } else {
+            settotalPrice(totalPrice - item.price);
+            item.count = item.count - 1;
+          }
+        }}
+        className={`${
+          !item.count
+            ? "border-blue-400 border"
+            : "border-green-400 bg-green-200 scale-95 border-4"
+        }`}
+      >
+        <Name>{item.name}</Name>
+        <Desc>{item.desc}</Desc>
+        <Price>&#x20B9;{item.price}</Price>
+      </Item>
+    </Wrapper>
+  );
 }
 
 const Wrapper = tw.div`

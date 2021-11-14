@@ -1,15 +1,21 @@
 import tw from "tailwind-styled-components";
 import Image from "next/image";
 import Link from "next/link";
-import Header from "../../components/Header.js";
-import { useContext } from "react";
 import AuthContext from "../../contexts/authContext";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+
+const AblyReceiveOrder = dynamic(
+  () => import("../../components/AblyReceiveOrder"),
+  { ssr: false }
+);
 
 const initialValue = [];
 
 export default function Dashboard() {
+  const router = useRouter;
   const { user } = useContext(AuthContext);
   const [menu, setMenu] = useState(initialValue);
   const [load, setLoad] = useState(true);
@@ -27,8 +33,8 @@ export default function Dashboard() {
   useEffect(() => {
     const newUser = JSON.parse(localStorage.getItem("profile"));
     const id = newUser.data.id;
-    const temp=newUser.data.email;
-    axios.get("/api/hotel/menu", { params:{id}}).then((res) => {
+    const temp = newUser.data.email;
+    axios.get("/api/hotel/menu", { params: { id } }).then((res) => {
       setMenu(res.data.menu);
       setEmail(temp);
       setLoad(false);
@@ -49,7 +55,7 @@ export default function Dashboard() {
     e.preventDefault();
     const newData = {
       email: email,
-      mapLocation:{
+      mapLocation: {
         lat: values.lat,
         lng: values.long,
       },
@@ -68,7 +74,6 @@ export default function Dashboard() {
     setValues({ ...values, [e.target.id]: e.target.value });
   };
 
-
   const handleDelete = async () => {
     const id = menu[del]._id;
 
@@ -81,6 +86,7 @@ export default function Dashboard() {
 
   return (
     <Wrapper>
+      <AblyReceiveOrder />
       {isOpen ? (
         <>
           <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
@@ -125,15 +131,13 @@ export default function Dashboard() {
         </>
       ) : null}
       <div className="text-4xl mb-10 ">
-         <p className="font-extrabold"> Hello,</p>
-          </div>
-      <HotelForm  onSubmit={(e) => handleSubmit(e)}>
+        <p className="font-extrabold"> Hello,</p>
+      </div>
+      <HotelForm onSubmit={(e) => handleSubmit(e)}>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="flex flex-wrap -mx-3 mb-2">
             <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              >
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                 Longitude
               </label>
               <input
@@ -142,13 +146,11 @@ export default function Dashboard() {
                 type="text"
                 placeholder="78.120"
                 value={values.long}
-              onChange={handleChange()}
+                onChange={handleChange()}
               />
             </div>
             <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              >
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                 Latitude
               </label>
               <input
@@ -157,30 +159,29 @@ export default function Dashboard() {
                 type="text"
                 placeholder="102.87"
                 value={values.lat}
-              onChange={handleChange()}
+                onChange={handleChange()}
               />
             </div>
             <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                for="min-order"
+                htmlFor="min-order"
               >
                 Min Order
               </label>
               <div className="relative">
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="minOrder"
-                type="number"
-                placeholder="500"
-                value={values.minOrder}
-                onChange={handleChange()}
-              />
+                <input
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="minOrder"
+                  type="number"
+                  placeholder="500"
+                  value={values.minOrder}
+                  onChange={handleChange()}
+                />
               </div>
             </div>
             <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0 mt-6 ">
-            
-             <input
+              <input
                 className="appearance-none block w-full bg-black-200 text-white-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer"
                 id="grid-city"
                 type="submit"
@@ -192,34 +193,30 @@ export default function Dashboard() {
       </HotelForm>
       <Menu>
         <div className="grid place-items-center">
-        <button className="">
-          <Link href="./addmenu">
-           
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-12 w-12 ml-3"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-           
-          </Link>
-          <strong className="font-bold text-lg block">
-          Add Dish
-          </strong>
-        </button>
-        {load &&
-            				<div
-                    className={
-                      "border-4 border-transparent h-8 w-8 rounded-full border-t-black animate-spin mt-8 block "
-                    }
-                  ></div>
-          }
+          <button className="">
+            <Link href="./addmenu">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-12 w-12 ml-3"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </Link>
+            <strong className="font-bold text-lg block">Add Dish</strong>
+          </button>
+          {load && (
+            <div
+              className={
+                "border-4 border-transparent h-8 w-8 rounded-full border-t-black animate-spin mt-8 block "
+              }
+            ></div>
+          )}
         </div>
         <br />
         <br /> <br /> <br /> <br /> <br />
@@ -231,12 +228,14 @@ export default function Dashboard() {
             <strong className="font-bold">
               Foodies want it back but sadly&nbsp; &nbsp;&nbsp;
             </strong>
-            <span className="block sm:inline">{`"${gone}"`} is removed from your offerings</span>
+            <span className="block sm:inline">
+              {`"${gone}"`} is removed from your offerings
+            </span>
           </div>
         )}
         <HotelGrid>
           {!load &&
-            menu.map((item, index) => {
+            menu?.map((item, index) => {
               return (
                 <div key={index}>
                   <a className="cursor-pointer" onClick={() => toggle(index)}>
