@@ -23,7 +23,7 @@ const Menu = () => {
     axios.get("/api/hotel/menu", { params: { id } }).then((res) => {
       console.log(res);
       setHotel(res.data);
-	  setLoad(false);
+      setLoad(false);
     });
   }, []);
 
