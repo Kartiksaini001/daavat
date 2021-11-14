@@ -6,6 +6,7 @@ import { useState, useEffect, useContext } from "react";
 import AuthContext from "../contexts/authContext";
 import i1 from "../img/test1.jpg";
 import Head from "next/head";
+import axios from "axios";
 const hotel = [
   {
     img: i1,
@@ -51,14 +52,35 @@ const hotel = [
 
 export default function Home() {
   const { user, setUser } = useContext(AuthContext);
+  const [hotel,setHotel]= useState(null);
   const router = useRouter();
   const [userId, setUserId] = useState("");
+
+  const allHotel = async (res) => {
+    const result ={ googleId:sessionStorage.getItem('googleId')};
+    console.log(result);
+    try {
+      await axios.get("./api/hotel")
+      .then((response) => {
+         setHotel(response.data);
+		 console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+
   useEffect(() => {
     const newUser = JSON.parse(localStorage.getItem("profile"));
     if (!newUser) {
       router.push("/auth");
       return;
     }
+    allHotel();
     OneSignal.push(function () {
       OneSignal.setExternalUserId(newUser.data.id);
     });
@@ -129,13 +151,14 @@ export default function Home() {
       <Wrapper>
         <Message>Hotels nearby you...</Message>
         <HotelGrid>
-          {hotel.map((item, index) => {
+          {hotel&&hotel.map((item, index) => {
+			  console.log(item.id);
             return (
-              <Link href="/menu" key={index}>
+              <Link href={`/menu/${item.id}`} key={index}>
                 <HotelCard>
                   <Image
                     height="1000"
-                    src={item.img}
+                    src={i1}
                     alt="Sunset in the mountains"
                     placeholder="blur"
                     priority

@@ -47,7 +47,7 @@ export default function ItemCard({ initialItem, totalPrice, settotalPrice }) {
 				}`}
 			>
 				<Name>{item.name}</Name>
-				<Desc>{item.description}</Desc>
+				<Desc>{item.desc}</Desc>
 				<Price>&#x20B9;{item.price}</Price>
 			</Item>
 		</Wrapper>

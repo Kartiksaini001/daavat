@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import AuthContext from "../contexts/authContext";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Header() {
   const { user, setUser } = useContext(AuthContext);
@@ -18,7 +19,7 @@ export default function Header() {
 
   return (
     <Wrapper>
-      <Title>Daavat</Title>
+      <Link href="/"><Title>Daavat</Title></Link>
       <UserIcon>
         {user && (
           <Image
@@ -42,7 +43,7 @@ const Wrapper = tw.div`
   p-4 mb-4 fixed bg-gray-100 w-full flex justify-between z-50
 `;
 const Title = tw.div`
-  text-3xl font-medium pl-4
+  text-3xl font-medium pl-4 cursor-pointer
 `;
 const UserIcon = tw.div`
 	pr-4
