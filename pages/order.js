@@ -7,7 +7,7 @@ const AblySendOrder = dynamic(() => import("../components/AblySendOrder"), {
 });
 
 const Order = () => {
-  const { items } = JSON.parse(sessionStorage.getItem("orderList"));
+  const { items } = JSON.parse(localStorage.getItem("orderList"));
   let totalAmount = 0;
   const [loading, setLoading] = useState(true);
   const [hotelRes, setHotelRes] = useState(
@@ -25,7 +25,7 @@ const Order = () => {
           ></div>
         )}
         <AblySendOrder
-          orderData={JSON.parse(sessionStorage.getItem("orderList"))}
+          orderData={JSON.parse(localStorage.getItem("orderList"))}
           setLoading={setLoading}
           setHotelRes={setHotelRes}
         />

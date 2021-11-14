@@ -52,7 +52,7 @@ export default function Home() {
   }
 
   const allHotel = async (res) => {
-    const result = { googleId: sessionStorage.getItem("googleId") };
+    const result = { googleId: localStorage.getItem("googleId") };
     console.log(result);
     try {
       await axios

@@ -71,7 +71,7 @@ const Menu = () => {
                         }
                       });
 
-                      sessionStorage.setItem(
+                      localStorage.setItem(
                         "orderList",
                         JSON.stringify(orderData)
                       );
