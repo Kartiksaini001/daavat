@@ -12,7 +12,7 @@ const Order = () => {
 						"border-4 border-blue-300 h-8 w-8 rounded-full border-t-blue-500 animate-spin inline-block mr-3"
 					}
 				></div>
-				Please wait! We are processing your order {":)"}
+				Please wait! We are processing your order {":-)"}
 			</ActionContainer>
 			<OrderSummary>
 				<Title>Your order</Title>

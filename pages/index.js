@@ -83,73 +83,16 @@ export default function Home() {
     } else {
       if (newUser.isHotel) router.push("/hotel/dashboard");
       allHotel();
-      OneSignal.push(function () {
-        OneSignal.setExternalUserId(newUser.data.id);
-      });
-
-      OneSignal.push(function () {
-        OneSignal.getExternalUserId().then(function (externalUserId) {
-          console.log("externalUserId: ", externalUserId);
-        });
-      });
 
       setUserId(newUser?.data?.id);
     }
   }, []);
 
-  var sendNotification = function (data) {
-    var headers = {
-      "Content-Type": "application/json; charset=utf-8",
-      Authorization: "Basic OTJlNWU2MTAtODIwNy00MzNkLTg0NTUtOWNhZTU1MWM3YjIw",
-    };
-
-    var options = {
-      host: "onesignal.com",
-      port: 443,
-      path: "/api/v1/notifications",
-      method: "POST",
-      headers: headers,
-    };
-
-    var https = require("https");
-    var req = https.request(options, function (res) {
-      res.on("data", function (data) {
-        console.log("Response:");
-        console.log(JSON.parse(data));
-      });
-    });
-
-    req.on("error", function (e) {
-      console.log("ERROR:");
-      console.log(e);
-    });
-
-    req.write(JSON.stringify(data));
-    req.end();
-  };
-
-  var message = {
-    app_id: "80641567-6862-4d4a-8a15-e4e6e83edeb1",
-    contents: { en: "Kaise ho???" },
-    channel_for_external_user_ids: "push",
-    include_external_user_ids: [userId],
-  };
-
-  // sendNotification(message);
-
   return (
     <>
       <Head>
         <title>Daavat</title>
-        <meta
-          name="description"
-          content="Integrating OneSignal with a Next.js app."
-        />
         <link rel="icon" href="/favicon.ico" />
-        <script
-          src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
-          async=""
-        ></script>
       </Head>
       <Wrapper>
         <Message>Hotels nearby you...</Message>
