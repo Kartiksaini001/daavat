@@ -148,3 +148,6 @@ px-6 py-4 h-2/5
 const HotelGrid = tw.div`
 px-10 grid md:grid-cols-2 md:gap-4 lg:grid-cols-4 lg:gap-6 sm:grid-cols-1
 `;
+const Footer = tw.div`
+	flex justify-center text-sm mt-4 text-transparent font-medium bg-gradient-to-r from-green-700 to-blue-800 bg-clip-text font-bold font-serif
+`;

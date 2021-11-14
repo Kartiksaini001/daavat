@@ -42,7 +42,7 @@ const Menu = () => {
                 {/*header*/}
                 <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
                   <h4 className="text-3xl font-semibold">
-                    Are you sure to place order of &#x20B9;{totalPrice}
+                    Are you sure to place order of &#x20B9;{totalPrice} ?
                   </h4>
                   <button
                     className="p-1 ml-auto bg-transparent border-0 text-black opacity-5 float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
@@ -101,7 +101,7 @@ const Menu = () => {
         </>
       ) : null}
       <Header>
-        <HotelName>{hotel?.name}</HotelName>
+        <HotelName>Welcome to {hotel?.name}</HotelName>
       </Header>
 	  {load &&
             				<div
@@ -154,7 +154,7 @@ const HotelName = tw.div`
 `;
 //flex flex-col mt-4 h-70 overflow-auto bg-white flex-1 mx-4 justify-center
 const ItemList = tw.div`
-  flex flex-col flex-1 p-4 mt-4 mx-auto flex-1 overflow-auto
+  flex flex-col flex-1 p-4 mt-4 mx-auto flex-1 overflow-auto w-full
 `;
 //flex justify-between bg-white p-4 items-center my-2 mx-5 rounded-lg py-8 transform hover:bg-opacity-75 transition shadow-md active:bg-green-100  bg-gray-200`;
 

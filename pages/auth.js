@@ -218,14 +218,14 @@ export default function Auth() {
 }
 
 const Wrapper = tw.div`
-    bg-gray-200 py-10 h-screen pt-24
+    bg-gray-200 py-10 pt-24 min-h-screen
 `;
 const UserType = tw.div`
   mx-auto w-max space-x-4 mb-5
 `;
 const TypeSelect = tw.span`
   cursor-pointer px-4 py-2 rounded-lg
-  ${(p) => (p.selected ? "bg-blue-500 text-xl" : "bg-gray-400")}
+  ${(p) => (p.selected ? "bg-black text-white text-center text-xl" : "bg-gray-400 text-center")}
 `;
 const FormHeader = tw.div`
     text-center font-bold text-2xl my-2
@@ -244,13 +244,13 @@ const Input = tw.input`
     block rounded-lg bg-gray-200 w-full p-2 focus:ring-2 focus:ring-blue-400 focus:outline-none
 `;
 const Submit = tw.button`
-    flex bg-blue-400 w-max px-4 py-2 mt-7 rounded-lg hover:bg-blue-500 mx-auto
+    flex bg-red-400 w-max px-4 py-2 mt-7 rounded-lg hover:bg-red-500 mx-auto
 `;
 const ToggleForm = tw.button`
     hover:bg-gray-200 px-2 py-1 rounded mt-4
 `;
 const GoogleBtn = tw.button`
-    flex mt-4 items-center mx-auto bg-blue-400 px-4 py-2 rounded-lg hover:bg-blue-500
+    flex mt-4 items-center mx-auto bg-red-400 px-4 py-2 rounded-lg hover:bg-red-500
 `;
 const ErrorBox = tw.span`
   text-sm text-red-600
