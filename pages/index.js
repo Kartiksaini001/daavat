@@ -80,7 +80,7 @@ export default function Home() {
               <Link href="/menu" key={index}>
                 <HotelCard>
                   <Image
-                    height="1000"
+                    height="1700"
                     src={item.img}
                     alt="Sunset in the mountains"
                     placeholder="blur"
