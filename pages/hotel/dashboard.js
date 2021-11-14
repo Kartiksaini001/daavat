@@ -26,9 +26,10 @@ export default function Dashboard() {
 
   useEffect(() => {
     const newUser = JSON.parse(localStorage.getItem("profile"));
-    const temp = newUser.data.email;
-    axios.get("/api/hotel/menu", { params: { email: temp } }).then((res) => {
-      setMenu(res.data);
+    const id = newUser.data.id;
+    const temp=newUser.data.email;
+    axios.get("/api/hotel/menu", { params:{id}}).then((res) => {
+      setMenu(res.data.menu);
       setEmail(temp);
     });
   }, []);
