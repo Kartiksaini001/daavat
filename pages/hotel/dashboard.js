@@ -6,6 +6,8 @@ import { useContext } from "react";
 import AuthContext from "../../contexts/authContext";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import HotelData from "../../components/HotelData.js";
+import router from "next/router";
 
 const initialValue = [];
 
@@ -18,19 +20,29 @@ export default function Dashboard() {
   const [del, setDel] = useState(null);
   const [alert, setAlert] = useState(false);
   const [email, setEmail] = useState(null);
+  const [name, setName]= useState(null);
   const [values, setValues] = useState({
     lat: "",
     long: "",
     minOrder: "",
   });
+  const [lat,setLat] = useState(null);
+  const [lng,setLng] = useState(null);
+  const [min,setMin] = useState(null);
+
 
   useEffect(() => {
     const newUser = JSON.parse(localStorage.getItem("profile"));
     const id = newUser.data.id;
-    const temp=newUser.data.email;
-    axios.get("/api/hotel/menu", { params:{id}}).then((res) => {
+    const temp = newUser.data.email;
+    const tem= newUser.data.name;
+    axios.get("/api/hotel/menu", { params: { id } }).then((res) => {
       setMenu(res.data.menu);
+      setLat(res.data.mapLocation.lat);
+      setLng(res.data.mapLocation.lng);
+      setMin(res.data.minOrder);
       setEmail(temp);
+      setName(tem);
       setLoad(false);
     });
   }, []);
@@ -44,12 +56,30 @@ export default function Dashboard() {
 
     setOpen(!isOpen);
   };
+  const isFormValid = () => {
+    if(values.lat===""||values.long===""||values.minOrder==="")
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  
+  };
 
   const handleSubmit = (e) => {
+    if(!isFormValid())
+    {
+      window.alert("FILL ALL FIELDS");
+    }
+    else
+    {
     e.preventDefault();
+    const temp=values;
     const newData = {
       email: email,
-      mapLocation:{
+      mapLocation: {
         lat: values.lat,
         lng: values.long,
       },
@@ -59,15 +89,16 @@ export default function Dashboard() {
       .patch("/api/hotel/updateHotel", newData)
       .then((res) => {
         console.log(res);
-        router.push("/hotel/dashboard");
+        setValues(temp);
+        router.push("/");
       })
       .catch((err) => console.log(err));
+    } 
   };
 
   const handleChange = () => (e) => {
     setValues({ ...values, [e.target.id]: e.target.value });
   };
-
 
   const handleDelete = async () => {
     const id = menu[del]._id;
@@ -124,42 +155,38 @@ export default function Dashboard() {
           <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
         </>
       ) : null}
-      <div className="text-4xl mb-10 ">
-         <p className="font-extrabold"> Hello,</p>
-          </div>
-      <HotelForm  onSubmit={(e) => handleSubmit(e)}>
+      <div className="mb-10 ">
+        <p className="font-extrabold text-2xl"> Hello, Admin of {name}</p>
+        <HotelData lat={lat} lng={lng} min={min} />
+      </div>
+      <HotelForm onSubmit={(e) => handleSubmit(e)}>
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="flex flex-wrap -mx-3 mb-2">
             <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              >
-                Longitude
-              </label>
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="long"
-                type="text"
-                placeholder="78.120"
-                value={values.long}
-              onChange={handleChange()}
-              />
-            </div>
-            <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
-              <label
-                className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-              >
+              <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                 Latitude
               </label>
               <input
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                 id="lat"
                 type="text"
-                placeholder="102.87"
                 value={values.lat}
-              onChange={handleChange()}
+                onChange={handleChange()}
               />
             </div>
+        <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
+          <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+            Longitude
+          </label>
+          <input
+            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            id="long"
+            type="text"
+            // placeholder="102.87"
+            value={values.long}
+            onChange={handleChange()}
+          />
+        </div>
             <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0">
               <label
                 className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
@@ -168,19 +195,18 @@ export default function Dashboard() {
                 Min Order
               </label>
               <div className="relative">
-              <input
-                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                id="minOrder"
-                type="number"
-                placeholder="500"
-                value={values.minOrder}
-                onChange={handleChange()}
-              />
+                <input
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  id="minOrder"
+                  type="number"
+                  placeholder="500"
+                  value={values.minOrder}
+                  onChange={handleChange()}
+                />
               </div>
             </div>
             <div className="w-full md:w-1/4 px-3 mb-6 md:mb-0 mt-6 ">
-            
-             <input
+              <input
                 className="appearance-none block w-full bg-black-200 text-white-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer"
                 id="grid-city"
                 type="submit"
@@ -192,34 +218,30 @@ export default function Dashboard() {
       </HotelForm>
       <Menu>
         <div className="grid place-items-center">
-        <button className="">
-          <Link href="./addmenu">
-           
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-12 w-12 ml-3"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                clipRule="evenodd"
-              />
-            </svg>
-           
-          </Link>
-          <strong className="font-bold text-lg block">
-          Add Dish
-          </strong>
-        </button>
-        {load &&
-            				<div
-                    className={
-                      "border-4 border-transparent h-8 w-8 rounded-full border-t-black animate-spin mt-8 block "
-                    }
-                  ></div>
-          }
+          <button className="">
+            <Link href="./addmenu">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-12 w-12 ml-3"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </Link>
+            <strong className="font-bold text-lg block">Add Dish</strong>
+          </button>
+          {load && (
+            <div
+              className={
+                "border-4 border-transparent h-8 w-8 rounded-full border-t-black animate-spin mt-8 block "
+              }
+            ></div>
+          )}
         </div>
         <br />
         <br /> <br /> <br /> <br /> <br />
@@ -231,7 +253,9 @@ export default function Dashboard() {
             <strong className="font-bold">
               Foodies want it back but sadly&nbsp; &nbsp;&nbsp;
             </strong>
-            <span className="block sm:inline">{`"${gone}"`} is removed from your offerings</span>
+            <span className="block sm:inline">
+              {`"${gone}"`} is removed from your offerings
+            </span>
           </div>
         )}
         <HotelGrid>
@@ -278,7 +302,7 @@ const Wrapper = tw.div`
 `;
 
 const HotelForm = tw.form`
-mb-6 w-full max-w-lg  ml-auto mr-auto
+mb-15 w-full max-w-lg  ml-auto mr-auto
 `;
 
 const Menu = tw.div`

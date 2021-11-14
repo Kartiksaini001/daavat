@@ -23,7 +23,7 @@ const Menu = () => {
     axios.get("/api/hotel/menu", { params: { id } }).then((res) => {
       console.log(res);
       setHotel(res.data);
-	  setLoad(false);
+      setLoad(false);
     });
   }, []);
 
@@ -103,13 +103,13 @@ const Menu = () => {
       <Header>
         <HotelName>Welcome to {hotel?.name}</HotelName>
       </Header>
-	  {load &&
-            				<div
-                    className={
-                      "border-4 border-transparent h-8 w-8 rounded-full border-t-black animate-spin mt-8 block "
-                    }
-                  ></div>
+      {load && (
+        <div
+          className={
+            "border-4 border-transparent h-8 w-8 rounded-full border-t-black animate-spin mt-8 block "
           }
+        ></div>
+      )}
       <ItemList>
         {!load &&
           hotel.menu.map((item, key) => (
